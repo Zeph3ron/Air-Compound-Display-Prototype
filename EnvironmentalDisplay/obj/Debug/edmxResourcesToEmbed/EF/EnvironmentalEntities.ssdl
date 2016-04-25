@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DbMandatoryReducedModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Compound">
+    <Key>
+      <PropertyRef Name="CompoundId" />
+    </Key>
+    <Property Name="CompoundId" Type="int" Nullable="false" />
+    <Property Name="CompoundName" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Equipment">
+    <Key>
+      <PropertyRef Name="EquipmentId" />
+    </Key>
+    <Property Name="EquipmentId" Type="int" Nullable="false" />
+    <Property Name="EquipmentName" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="int" Nullable="false" />
+    <Property Name="LocationName" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Setup">
+    <Key>
+      <PropertyRef Name="SetupId" />
+    </Key>
+    <Property Name="SetupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationId" Type="int" />
+    <Property Name="CompoundId" Type="int" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="EquipmentId" Type="int" />
+    <Property Name="SetupName" Type="varchar" MaxLength="20" />
+    <Property Name="Results" Type="varchar" MaxLength="20" />
+    <Property Name="DateOfMeasurement" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Unit">
+    <Key>
+      <PropertyRef Name="UnitId" />
+    </Key>
+    <Property Name="UnitId" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK_Setup_Compound">
+    <End Role="Compound" Type="Self.Compound" Multiplicity="0..1" />
+    <End Role="Setup" Type="Self.Setup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Compound">
+        <PropertyRef Name="CompoundId" />
+      </Principal>
+      <Dependent Role="Setup">
+        <PropertyRef Name="CompoundId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Setup_Equipment">
+    <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+    <End Role="Setup" Type="Self.Setup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="EquipmentId" />
+      </Principal>
+      <Dependent Role="Setup">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Setup_Location">
+    <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+    <End Role="Setup" Type="Self.Setup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="LocationId" />
+      </Principal>
+      <Dependent Role="Setup">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Setup_Unit">
+    <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+    <End Role="Setup" Type="Self.Setup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="UnitId" />
+      </Principal>
+      <Dependent Role="Setup">
+        <PropertyRef Name="UnitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DbMandatoryReducedModelStoreContainer">
+    <EntitySet Name="Compound" EntityType="Self.Compound" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Setup" EntityType="Self.Setup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Setup_Compound" Association="Self.FK_Setup_Compound">
+      <End Role="Compound" EntitySet="Compound" />
+      <End Role="Setup" EntitySet="Setup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Setup_Equipment" Association="Self.FK_Setup_Equipment">
+      <End Role="Equipment" EntitySet="Equipment" />
+      <End Role="Setup" EntitySet="Setup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Setup_Location" Association="Self.FK_Setup_Location">
+      <End Role="Location" EntitySet="Location" />
+      <End Role="Setup" EntitySet="Setup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Setup_Unit" Association="Self.FK_Setup_Unit">
+      <End Role="Unit" EntitySet="Unit" />
+      <End Role="Setup" EntitySet="Setup" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
