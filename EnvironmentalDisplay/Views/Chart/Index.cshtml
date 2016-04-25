@@ -1,0 +1,90 @@
+﻿@model EnvironmentalDisplay.EF.Setup
+@{
+    ViewBag.Title = "Filtering data";
+    IEnumerable<string> chartTypes = ViewBag.ChartTypes;
+}
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function () {
+        if ($("#LocationId").val() == "")
+        { $("#Compound").prop("disabled", true); }
+        if ($("#LocationId").val() != "") {
+                var locationOptions = {};
+                locationOptions.url = "/Chart/Compounds";
+                locationOptions.type = "POST";
+                locationOptions.data = JSON.stringify({ locationId: $("#LocationId").val() });
+                locationOptions.datatype = "json";
+                locationOptions.contentType = "application/json";
+                locationOptions.success = function (CompoundList) {
+                    $("#Compound").empty();
+                    for (var i = 0; i < CompoundList.length; i++) {
+                        $("#Compound").append("<option>" + CompoundList[i] + "</option>");
+                    }                             
+                    $("#Compound").prop("disabled", false);
+                };
+                locationOptions.error = function () { alert("Error in Getting compounds, Please select a1 Location"); };
+                $.ajax(locationOptions);
+        }
+        $("#LocationId").change(function () {
+            if ($("#LocationId").val() != "") {
+                var locationOptions = {};
+                locationOptions.url = "/Chart/Compounds";
+                locationOptions.type = "POST";
+                locationOptions.data = JSON.stringify({ locationId: $("#LocationId").val() });
+                locationOptions.datatype = "json";
+                locationOptions.contentType = "application/json";
+                locationOptions.success = function (CompoundList) {
+                    $("#Compound").empty();
+                    for (var i = 0; i < CompoundList.length; i++) {
+                        $("#Compound").append("<option>" + CompoundList[i] + "</option>");
+                    }                             
+                    $("#Compound").prop("disabled", false);
+                };
+                locationOptions.error = function () { alert("Error in Getting compounds, Please select a2 Location"); };
+                $.ajax(locationOptions);
+            }
+            else {
+                $("#Compound").empty();
+                $("#Compound").prop("disabled", true);
+            }
+        });
+    });
+</script>
+
+<h2>Filtering measurement data</h2>
+<br/>
+@using (Html.BeginForm("Redirector", "Chart", FormMethod.Get))
+{
+    @Html.LabelFor(model => model.Location, "Select Location", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("LocationId", null, htmlAttributes: new {@class = "form-control"}, optionLabel: "Please Select a Location")
+        @Html.ValidationMessageFor(model => model.Location, "", new {@class = "text-danger"})
+    </div>
+    <br/>
+    <br/>
+    <div class="form-group">
+        @Html.Label("Select Compound:", new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            <select id="Compound" name="compoundName" class="form-control"></select>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="form-group">
+        @Html.Label("Select a Chart:", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("chartType", new SelectList(chartTypes.Select(x => new { Value = x, Text = x }), "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <br/><br />
+    @Html.Label("Select A Date:", new { @class = "control-label col-md-2" })
+    <div class="input-daterange">
+        <input type="date" name="dateFrom">
+        <span class="add-on">to</span>
+        <input type="date" name="dateTo">
+    </div>
+    <br/>
+    <input type="submit" value="Search"/>
+} 
+
