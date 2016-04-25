@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f480cfc90e114c7fbe67dabb304f63dc" Name="Diagram1">
+        <EntityTypeShape EntityType="DbMandatoryEnvironmentModel.Compound" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMandatoryEnvironmentModel.Equipment" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMandatoryEnvironmentModel.Location" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMandatoryEnvironmentModel.Setup" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMandatoryEnvironmentModel.Unit" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="DbMandatoryEnvironmentModel.FK_Setup_Compound" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMandatoryEnvironmentModel.FK_Setup_Equipment" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMandatoryEnvironmentModel.FK_Setup_Location" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMandatoryEnvironmentModel.FK_Setup_Unit" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
